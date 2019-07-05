@@ -14,7 +14,11 @@ class DeliveryCarrier(models.Model):
     vehicle_ids = fields.One2many(
         'br_delivery.carrier.vehicle', 'carrier_id', u'Veículos')
     partner_id = fields.Many2one('res.partner', string='Transportadora')
+<<<<<<< HEAD
     incoterm = fields.Many2one('account.incoterms', 'Tipo do Frete',
+=======
+    incoterm = fields.Many2one('stock.incoterms', 'Tipo do Frete',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                                help="Incoterm which stands for 'International "
                                     "Commercial terms' implies its a series "
                                     "of sales terms which are used in the "

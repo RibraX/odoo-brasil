@@ -25,6 +25,15 @@ valor da operacao ou da prestacao; II - a correcao de dados cadastrais que \
 implique mudanca do remetente ou do destinatario; III - a data de \
 emissao ou de saida."
 
+COND_USO = "A Carta de Correcao e disciplinada pelo paragrafo 1o-A do art. 7o \
+do Convenio S/N, de 15 de dezembro de 1970 e pode ser utilizada para \
+regularizacao de erro ocorrido na emissao de documento fiscal, desde que o \
+erro nao esteja relacionado com: I - as variaveis que determinam o valor do \
+imposto tais como: base de calculo, aliquota, diferenca de preco, quantidade, \
+valor da operacao ou da prestacao; II - a correcao de dados cadastrais que \
+implique mudanca do remetente ou do destinatario; III - a data de \
+emissao ou de saida."
+
 
 class WizardCartaCorrecaoEletronica(models.TransientModel):
     _name = 'wizard.carta.correcao.eletronica'
@@ -62,7 +71,11 @@ class WizardCartaCorrecaoEletronica(models.TransientModel):
         tz = pytz.timezone(self.env.user.partner_id.tz) or pytz.utc
         dt_evento = datetime.utcnow()
         dt_evento = pytz.utc.localize(dt_evento).astimezone(tz)
+<<<<<<< HEAD
 
+=======
+        self.correcao = self.correcao.replace('\n', '<br />')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         carta = {
             'idLote': self.id,
             'estado':  self.eletronic_doc_id.company_id.state_id.ibge_code,
@@ -74,7 +87,11 @@ class WizardCartaCorrecaoEletronica(models.TransientModel):
                     "[^0-9]", "", self.eletronic_doc_id.company_id.cnpj_cpf),
                 'cOrgao':  self.eletronic_doc_id.company_id.state_id.ibge_code,
                 'tpAmb': self.eletronic_doc_id.company_id.tipo_ambiente,
+<<<<<<< HEAD
                 'dhEvento':  dt_evento.strftime('%Y-%m-%dT%H:%M:%S-03:00'),
+=======
+                'dhEvento': dt_evento.strftime('%Y-%m-%dT%H:%M:%S-03:00'),
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                 'chNFe': self.eletronic_doc_id.chave_nfe,
                 'xCorrecao': self.correcao,
                 'tpEvento': '110110',
@@ -82,7 +99,11 @@ class WizardCartaCorrecaoEletronica(models.TransientModel):
                 'xCondUso': COND_USO,
                 'nSeqEvento': self.sequential,
                 'Id': "ID110110%s%02d" % (
+<<<<<<< HEAD
                     self.eletronic_doc_id.chave_nfe, self.sequential),
+=======
+                    self.eletronic_doc_id.chave_nfe, self.sequential)
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             }],
         }
         cert = self.eletronic_doc_id.company_id.with_context(
@@ -93,6 +114,10 @@ class WizardCartaCorrecaoEletronica(models.TransientModel):
         resposta = recepcao_evento_carta_correcao(certificado, **carta)
 
         retorno = resposta['object'].getchildren()[0]
+<<<<<<< HEAD
+=======
+
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         if retorno.cStat == 128 and retorno.retEvento.infEvento.cStat in (135,
                                                                           136):
             eventos = self.env['carta.correcao.eletronica.evento']

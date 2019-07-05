@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+<<<<<<< HEAD
         <report id="action_boleto_account_move_line"
                 name="br_boleto.report"
+=======
+        <report id="action_insert_reports_print_button_account_move_line"
+                name="br_boleto.report.print"
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                 model="account.move.line"
                 report_type="qweb-pdf"
                 string="Boleto"/>

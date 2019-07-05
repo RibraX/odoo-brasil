@@ -44,7 +44,10 @@ class AccountInvoiceLine(models.Model):
             'ii_base_calculo': self.ii_base_calculo,
             'issqn_base_calculo': self.issqn_base_calculo,
             'icms_aliquota_inter_part': self.icms_aliquota_inter_part,
+<<<<<<< HEAD
             'l10n_br_issqn_deduction': self.l10n_br_issqn_deduction,
+=======
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         }
 
     @api.one
@@ -62,7 +65,11 @@ class AccountInvoiceLine(models.Model):
                  'icms_base_calculo_manual', 'ipi_base_calculo_manual',
                  'pis_base_calculo_manual', 'cofins_base_calculo_manual',
                  'icms_st_aliquota_deducao', 'ii_base_calculo',
+<<<<<<< HEAD
                  'icms_aliquota_inter_part', 'l10n_br_issqn_deduction')
+=======
+                 'icms_aliquota_inter_part')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     def _compute_price(self):
         currency = self.invoice_id and self.invoice_id.currency_id or None
         price = self.price_unit * (1 - (self.discount or 0.0) / 100.0)
@@ -296,7 +303,11 @@ class AccountInvoiceLine(models.Model):
     tax_icms_fcp_id = fields.Many2one(
         'account.tax', string="% FCP", domain=[('domain', '=', 'fcp')])
     icms_aliquota_inter_part = fields.Float(
+<<<<<<< HEAD
         u'% Partilha', default=100.0, digits=dp.get_precision('Discount'))
+=======
+        u'% Partilha', default=80.0, digits=dp.get_precision('Discount'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     icms_fcp_uf_dest = fields.Float(
         string=u'Valor FCP', compute='_compute_price',
         digits=dp.get_precision('Discount'), )

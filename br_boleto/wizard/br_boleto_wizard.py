@@ -15,7 +15,14 @@ class BrBoletoWizard(models.TransientModel):
 
     @api.multi
     def imprimir_boleto(self):
+<<<<<<< HEAD
         line_id = self.move_line_id.l10n_br_order_line_id
+=======
+        order_line = self.env['payment.order.line'].search([
+            ('move_line_id', '=', self.move_line_id.id)])
+        if order_line:
+            order_line.unlink()
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         if self.date_change:
             if line_id.state == 'draft':
                 self.move_line_id.date_maturity = self.date_change

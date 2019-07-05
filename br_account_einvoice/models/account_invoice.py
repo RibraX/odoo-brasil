@@ -5,18 +5,35 @@ import logging
 from datetime import datetime
 from random import SystemRandom
 
+<<<<<<< HEAD
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
 
+=======
+from odoo import api, fields, models
+from odoo.report.render import render
+from odoo.exceptions import UserError
+
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 TYPE2EDOC = {
     'out_invoice': 'saida',        # Customer Invoice
     'in_invoice': 'entrada',          # Vendor Bill
     'out_refund': 'entrada',        # Customer Refund
     'in_refund': 'saida',          # Vendor Refund
 }
+
+
+class external_pdf(render):
+    def __init__(self, pdf):
+        render.__init__(self)
+        self.pdf = pdf
+        self.output_type = 'pdf'
+
+    def _render(self):
+        return self.pdf
 
 
 class AccountInvoice(models.Model):
@@ -94,6 +111,32 @@ class AccountInvoice(models.Model):
         if not isinstance(report, str):
             return report
         action = self.env.ref(report).report_action(doc)
+        return action
+
+    def _return_pdf_invoice(self, doc):
+        return None
+
+    def action_preview_danfe(self):
+        docs = self.env['invoice.eletronic'].search(
+            [('invoice_id', '=', self.id)])
+
+        if not docs:
+            raise UserError(u'Não existe um E-Doc relacionado à esta fatura')
+
+        for doc in docs:
+            if doc.state not in ('done', 'cancel'):
+                raise UserError('Nota Fiscal na fila de envio. Aguarde!')
+
+        report = self._return_pdf_invoice(docs[0])
+        if not report:
+            raise UserError(
+                'Nenhum relatório implementado para este modelo de documento')
+
+        if not isinstance(report, str):
+            return report
+
+        action = self.env['report'].get_action(
+            docs.ids, report)
         return action
 
     def _prepare_edoc_item_vals(self, line):

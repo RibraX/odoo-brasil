@@ -24,8 +24,12 @@
     'data': [
         'sequence/br_cnab_sequence.xml',
         'views/payment_order.xml',
+<<<<<<< HEAD
         'views/payment_statement.xml',
         'wizard/payment_cnab_import.xml',
+=======
+        'wizard/wizard_import_cnab.xml',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     ],
     'installable': True
 }

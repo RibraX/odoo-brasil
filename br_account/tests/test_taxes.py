@@ -254,8 +254,13 @@ class TestTaxBrasil(TestBaseBr):
         self.assertEquals(res['total_excluded'], 100.0)
         self.assertEquals(res['total_included'], 100.0)
         self.assertEquals(len(res['taxes']), 3)
+<<<<<<< HEAD
         self.assertEquals(res['taxes'][0]['amount'], 0.0)  # Remetente
         self.assertEquals(res['taxes'][1]['amount'], 10.0)  # Destinatário
+=======
+        self.assertEquals(res['taxes'][0]['amount'], 2.0)  # Remetente
+        self.assertEquals(res['taxes'][1]['amount'], 8.0)  # Destinatário
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         self.assertEquals(res['taxes'][2]['amount'], 2.0)  # FCP
 
     def test_difal_fcp_reducao_frete_seguro_despesas(self):
@@ -268,6 +273,11 @@ class TestTaxBrasil(TestBaseBr):
         self.assertEquals(res['total_excluded'], 100.0)
         self.assertEquals(res['total_included'], 100.0)
         self.assertEquals(len(res['taxes']), 3)
+<<<<<<< HEAD
         self.assertEquals(res['taxes'][0]['amount'], 0.0)  # Remetente
         self.assertEquals(res['taxes'][1]['amount'], 11.20)  # Destinatário
+=======
+        self.assertEquals(res['taxes'][0]['amount'], 2.24)  # Remetente
+        self.assertEquals(res['taxes'][1]['amount'], 8.96)  # Destinatário
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         self.assertEquals(res['taxes'][2]['amount'], 2.24)  # FCP

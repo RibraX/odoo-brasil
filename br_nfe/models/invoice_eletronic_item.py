@@ -40,7 +40,11 @@ class InvoiceEletronicItem(models.Model):
     icms_aliquota_interestadual = fields.Float(
         string=u"% ICMS Inter", readonly=True, states=STATE)
     icms_aliquota_inter_part = fields.Float(
+<<<<<<< HEAD
         string=u'% Partilha', default=100.0, readonly=True, states=STATE)
+=======
+        string=u'% Partilha', default=80.0, readonly=True, states=STATE)
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     icms_uf_remet = fields.Monetary(
         string=u'ICMS Remetente', readonly=True, states=STATE)
     icms_uf_dest = fields.Monetary(

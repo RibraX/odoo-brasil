@@ -81,8 +81,13 @@ class AccountTax(models.Model):
                                ('outros', 'Outros')], string="Tipo")
     amount_type = fields.Selection(selection_add=[('icmsst', 'ICMS ST')])
     difal_por_dentro = fields.Boolean(string="Calcular Difal por Dentro?")
+<<<<<<< HEAD
     icms_st_incluso = fields.Boolean(
         string="Incluir ICMS ST na Base de Calculo?")
+=======
+    frete_base = fields.Boolean(string="Incluir o frete na base de cálculo?",
+                                default=True)
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.onchange('domain')
     def _onchange_domain_tax(self):
@@ -131,14 +136,26 @@ class AccountTax(models.Model):
         if "ipi_reducao_bc" in self.env.context:
             reducao_ipi = self.env.context['ipi_reducao_bc']
         base_ipi = price_base
-        if "valor_frete" in self.env.context:
+        if "valor_frete" in self.env.context and ipi_tax.frete_base:
             base_ipi += self.env.context["valor_frete"]
         if "valor_seguro" in self.env.context:
             base_ipi += self.env.context["valor_seguro"]
         if "outras_despesas" in self.env.context:
             base_ipi += self.env.context["outras_despesas"]
 
+<<<<<<< HEAD
         return base_ipi * (1 - (reducao_ipi / 100.0))
+=======
+        base_tax = base_ipi * (1 - (reducao_ipi / 100.0))
+
+        if 'ipi_base_calculo_manual' in self.env.context and\
+                self.env.context['ipi_base_calculo_manual'] > 0:
+            base_tax = self.env.context['ipi_base_calculo_manual']
+
+        vals['base'] = base_tax
+        vals['amount'] = ipi_tax._compute_amount(base_tax, 1.0)
+        return [vals]
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     def _compute_icms(self, price_base, ipi_value):
         icms_tax = self.filtered(lambda x: x.domain == 'icms')
@@ -245,7 +262,29 @@ class AccountTax(models.Model):
 
         base_icms *= 1 - (reducao_icms / 100.0)
         interestadual = icms_inter._compute_amount(base_icms, 1.0)
+<<<<<<< HEAD
         vals_inter['base'] = base_icms
+=======
+        vals_inter['base'] = base_icms
+        vals_intra['base'] = base_icms
+
+        if icms_inter.difal_por_dentro or icms_intra.difal_por_dentro:
+            base_icms = base_icms - interestadual
+            base_icms = base_icms / (1 - (icms_intra.amount) / 100)
+
+        interno = icms_intra._compute_amount(base_icms, 1.0)
+
+        if 'icms_aliquota_inter_part' in self.env.context:
+            icms_inter_part = self.env.context["icms_aliquota_inter_part"]
+        else:
+            icms_inter_part = 80.0
+
+        vals_inter['amount'] = round((interno - interestadual) *
+                                     (100 - icms_inter_part) / 100, 2)
+        vals_inter['base'] = base_icms
+        vals_intra['amount'] = round((interno - interestadual) *
+                                     icms_inter_part / 100, 2)
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         vals_intra['base'] = base_icms
 
         if icms_inter.difal_por_dentro or icms_intra.difal_por_dentro:

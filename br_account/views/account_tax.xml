@@ -16,7 +16,11 @@
             <field name="name" position="after">
                 <field name="domain" />
                 <field name="difal_por_dentro" />
+<<<<<<< HEAD
                 <field name="icms_st_incluso" />
+=======
+                <field name="frete_base" attrs="{'invisible':[('domain', '!=', ('ipi'))]}"/>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             </field>
         </field>
     </record>

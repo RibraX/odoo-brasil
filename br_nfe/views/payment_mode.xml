@@ -3,7 +3,11 @@
 
     <record id="view_br_nfe_payment_mode_form" model="ir.ui.view">
         <field name="name">view.br.nfe.payment.mode.form</field>
+<<<<<<< HEAD
         <field name="model">l10n_br.payment.mode</field>
+=======
+        <field name="model">payment.mode</field>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         <field name="inherit_id" ref="br_account_payment.account_payment_mode_form" />
         <field name="arch" type="xml">
             <field name="active" position="before">

@@ -5,7 +5,11 @@
 import re
 from odoo import models, fields, api, _
 from odoo.addons.br_base.tools import fiscal
+<<<<<<< HEAD
 from odoo.exceptions import UserError, ValidationError
+=======
+from odoo.exceptions import ValidationError
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
 
 class CrmLead(models.Model):
@@ -28,18 +32,30 @@ class CrmLead(models.Model):
 
     @api.constrains('cnpj')
     def _check_cnpj(self):
+<<<<<<< HEAD
         for item in self:
             if item.cnpj:
                 if not fiscal.validate_cnpj(item.cnpj):
                     raise ValidationError(_(u'CNPJ inválido!'))
+=======
+        if self.cnpj:
+            if not fiscal.validate_cnpj(self.cnpj):
+                raise ValidationError(_(u'CNPJ inválido!'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return True
 
     @api.constrains('cpf')
     def _check_cpf(self):
+<<<<<<< HEAD
         for item in self:
             if item.cpf:
                 if not fiscal.validate_cpf(item.cpf):
                     raise ValidationError(_(u'CPF inválido!'))
+=======
+        if self.cpf:
+            if not fiscal.validate_cpf(self.cpf):
+                raise ValidationError(_(u'CPF inválido!'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return True
 
     def _validate_ie_param(self, uf, inscr_est):
@@ -80,7 +96,11 @@ class CrmLead(models.Model):
                     % (val[0:2], val[2:5], val[5:8], val[8:12], val[12:14])
                 self.cnpj = cnpj_cpf
             else:
+<<<<<<< HEAD
                 raise UserError(_(u'Verifique o CNPJ'))
+=======
+                raise ValidationError(_(u'Verifique o CNPJ'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.onchange('cpf')
     def onchange_mask_cpf(self):
@@ -91,7 +111,11 @@ class CrmLead(models.Model):
                     % (val[0:3], val[3:6], val[6:9], val[9:11])
                 self.cpf = cnpj_cpf
             else:
+<<<<<<< HEAD
                 raise UserError(_(u'Verifique o CPF'))
+=======
+                raise ValidationError(_(u'Verifique o CPF'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.onchange('city_id')
     def onchange_city_id(self):

@@ -22,6 +22,11 @@
         'uom',
     ],
     'data': [
+<<<<<<< HEAD
+=======
+        'views/stock.xml',
+        'views/sale.xml',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         'views/delivery_view.xml',
         'views/br_delivery_view.xml',
         'views/sale.xml',

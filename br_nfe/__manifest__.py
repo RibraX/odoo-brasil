@@ -16,8 +16,12 @@
     ],
     'depends': [
         'br_account_einvoice',
+<<<<<<< HEAD
         'br_stock_account',
         'br_account_payment',
+=======
+        'br_account_payment'
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     ],
     'external_dependencies': {
         'python': [
@@ -36,8 +40,12 @@
         'views/inutilized_nfe.xml',
         'views/br_nfe.xml',
         'views/payment_mode.xml',
+<<<<<<< HEAD
         'views/stock_picking.xml',
         'reports/danfe_report.xml',
+=======
+        'reports/br_nfe_reports.xml',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         'wizard/cancel_nfe.xml',
         'wizard/carta_correcao_eletronica.xml',
         'wizard/inutilize_nfe_numeration.xml',

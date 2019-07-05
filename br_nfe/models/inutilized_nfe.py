@@ -44,11 +44,14 @@ class InutilizedNfe(models.Model):
                             required=True, readonly=True, states=STATE)
     code = fields.Char(string="Código", size=10)
     motive = fields.Char(string="Motivo", size=300)
+<<<<<<< HEAD
     sent_xml = fields.Binary(string="Xml Envio", readonly=True)
     sent_xml_name = fields.Char(string=u"Xml Envio", size=30, readonly=True)
     received_xml = fields.Binary(string=u"Xml Recebimento", readonly=True)
     received_xml_name = fields.Char(
         string=u"Xml Recebimento", size=30, readonly=True)
+=======
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.model
     def create(self, vals):
@@ -112,6 +115,13 @@ class InutilizedNfe(models.Model):
         }
 
     def _handle_response(self, response):
+<<<<<<< HEAD
+=======
+        self._create_attachment(
+            'inutilizacao-envio', self, response['sent_xml'])
+        self._create_attachment(
+            'inutilizacao-recibo', self, response['received_xml'])
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         inf_inut = response['object'].getchildren()[0].infInut
         status = inf_inut.cStat
         if status == 102:
@@ -120,6 +130,7 @@ class InutilizedNfe(models.Model):
                 'code': inf_inut.cStat,
                 'motive': inf_inut.xMotivo
             })
+<<<<<<< HEAD
             self._create_attachment(
                 'inutilizacao-envio', self, response['sent_xml'])
             self._create_attachment(
@@ -145,6 +156,11 @@ class InutilizedNfe(models.Model):
                 'view_mode': 'form',
                 'target': 'new',
             }
+=======
+        else:
+            msg = '%s - %s' % (inf_inut.cStat, inf_inut.xMotivo)
+            raise UserError(msg)
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     def send_sefaz(self):
         company = self.env.user.company_id
@@ -160,16 +176,25 @@ class InutilizedNfe(models.Model):
 
         resposta = inutilizar_nfe(certificado, obj=obj, estado=estado,
                                   ambiente=int(ambiente), modelo=obj['modelo'])
+<<<<<<< HEAD
         return self._handle_response(response=resposta)
+=======
+        self._handle_response(response=resposta)
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.multi
     def action_send_inutilization(self):
         self.validate_hook()
+<<<<<<< HEAD
         retorno = self.send_sefaz()
         if retorno:
             return retorno
         return self.env.ref(
             'br_nfe.action_invoice_eletronic_inutilized').read()[0]
+=======
+        self.send_sefaz()
+        self.update_sequence_invoice_number()
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     def _create_attachment(self, prefix, event, data):
         file_name = '%s-%s.xml' % (
@@ -183,3 +208,18 @@ class InutilizedNfe(models.Model):
                 'res_model': 'invoice.eletronic.inutilized',
                 'res_id': event.id
             })
+
+    def update_sequence_invoice_number(self):
+        invoice = self.env['invoice.eletronic'].search([
+            ('serie', '=', self.serie.id),
+            ('numero', '=', self.numeration_end + 1)])
+
+        if invoice:
+            last_inv = self.env['invoice.eletronic'].search([
+                ('serie', '=', self.serie.id)],
+                order='numero desc', limit=1)
+            self.serie.sudo().internal_sequence_id.write(
+                {'number_next_actual': last_inv.numero + 1})
+        else:
+            self.serie.sudo().internal_sequence_id.write(
+                {'number_next_actual': self.numeration_end + 1})

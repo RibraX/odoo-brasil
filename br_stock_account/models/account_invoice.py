@@ -43,6 +43,7 @@ class AccountInvoice(models.Model):
 
     # Transporte
     freight_responsibility = fields.Selection(
+<<<<<<< HEAD
         [('0', '0 - Contratação do Frete por conta do Remetente (CIF)'),
          ('1', '1 - Contratação do Frete por conta do Destinatário (FOB)'),
          ('2', '2 - Contratação do Frete por conta de Terceiros'),
@@ -50,6 +51,16 @@ class AccountInvoice(models.Model):
          ('4', '4 - Transporte Próprio por conta do Destinatário'),
          ('9', '9 - Sem Ocorrência de Transporte')],
         u'Modalidade do frete', default="9")
+=======
+        [('0', u'0 - Contratação do Frete por conta do Remetente (CIF)'),
+         ('1', u'1 - Contratação do Frete por conta do Destinatário (FOB)'),
+         ('2', u'2 - Contratação do Frete por conta de Terceiros'),
+         ('3', u'3 - Transporte Próprio por conta do Remetente'),
+         ('4', u'4 - Transporte Próprio por conta do Destinatário'),
+         ('9', u'9 - Sem Ocorrência de Transporte')],
+        u'Modalidade do frete', default="9")
+    carrier_id = fields.Many2one('delivery.carrier', 'Método de Entrega')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     shipping_supplier_id = fields.Many2one('res.partner', 'Transportadora')
     vehicle_plate = fields.Char(u'Placa do Veículo', size=7)
     vehicle_state_id = fields.Many2one('res.country.state', 'UF da Placa')

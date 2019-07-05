@@ -28,6 +28,10 @@
         'views/res_config_settings.xml',
         'wizard/br_product_fiscal_classification_wizard.xml',
         'security/ir.model.access.csv',
+<<<<<<< HEAD
         'reports/account_invoice.xml',
+=======
+        'views/account_invoice_refund.xml',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     ],
 }

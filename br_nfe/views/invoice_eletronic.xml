@@ -19,9 +19,14 @@
                 </button>
             </button>
             <field name="payment_term_id" position="after">
+<<<<<<< HEAD
                 <field name="payment_mode_id" />
                 <field name="metodo_pagamento" />
             </field>
+=======
+               <field name="payment_mode_id" />
+           </field>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             <page name="totais" position="after">
                 <page name="transporte" string="Transportes" attrs="{'invisible': [('model', 'not in', ('55', '65'))]}">
                     <group>

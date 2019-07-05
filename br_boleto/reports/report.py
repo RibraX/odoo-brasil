@@ -17,6 +17,7 @@ class IrActionsReport(models.Model):
         return super(IrActionsReport, self).render_qweb_html(
             res_ids, data=data)
 
+<<<<<<< HEAD
     def render_qweb_pdf(self, res_ids, data=None):
         if not self.name == 'Boleto':
             return super(IrActionsReport, self).render_qweb_pdf(
@@ -26,6 +27,18 @@ class IrActionsReport(models.Model):
         if self.model == 'account.invoice':
             ai_obj = self.env['account.invoice']
             for account_invoice in ai_obj.browse(res_ids):
+=======
+    def create(self, cr, uid, ids, datas, context=False):
+        env = odoo.api.Environment(cr, uid, context or {})
+        active_ids = context.get('active_ids')
+        active_model = context.get('active_model')
+
+        ids_move_lines = []
+        aml_obj = env['account.move.line']
+        if active_model == 'account.invoice':
+            ai_obj = env['account.invoice']
+            for account_invoice in ai_obj.browse(active_ids):
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                 for move_line in account_invoice.receivable_move_line_ids:
                     move_line_ids |= move_line
         elif self.model == 'account.move.line':

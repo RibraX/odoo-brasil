@@ -4,7 +4,11 @@
 from ..boleto.document import getBoletoSelection
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
+<<<<<<< HEAD
 from odoo.exceptions import UserError, ValidationError
+=======
+from odoo.exceptions import UserError
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
 selection = getBoletoSelection()
 IMPLEMENTADOS = ('1', '3', '4', '6', '7', '8', '9', '10')
@@ -143,6 +147,7 @@ class PaymentMode(models.Model):
     @api.onchange('boleto_protesto', 'boleto_type')
     def _check_boleto_protesto(self):
         if self.boleto_protesto == '0' and self.boleto_type == '3':
+<<<<<<< HEAD
             raise UserError(
                 _('Código de protesto inválido para banco Bradesco!'))
 
@@ -168,6 +173,9 @@ class PaymentMode(models.Model):
                     _('Sequência já usada em outro modo de pagamento'))
             if not rec.boleto_type:
                 raise ValidationError(_('Escolha o banco do boleto!'))
+=======
+            raise UserError('Código de protesto inválido para banco Bradesco!')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.multi
     def write(self, vals):

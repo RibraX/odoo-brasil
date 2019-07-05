@@ -383,6 +383,7 @@ def validate_ie_to(inscr_est):
         # verificando os dígitos 3 e 4
         if not inscr_est[2:4] in ['01', '02', '03', '99']:
             return False
+<<<<<<< HEAD
 
         # Pega apenas os dígitos que entram no cálculo
         inscr_est = list(map(int, inscr_est))
@@ -393,6 +394,18 @@ def validate_ie_to(inscr_est):
         inscr_est = list(map(int, inscr_est))
         nova_ie = inscr_est[:8]
 
+=======
+
+        # Pega apenas os dígitos que entram no cálculo
+        inscr_est = map(int, inscr_est)
+        nova_ie = inscr_est[:2] + inscr_est[4:10]
+
+    # Contemplando o novo IE de Tocantins de 9 digitos
+    elif len(inscr_est) == 9:
+        inscr_est = map(int, inscr_est)
+        nova_ie = inscr_est[:8]
+
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     else:
         return False
 

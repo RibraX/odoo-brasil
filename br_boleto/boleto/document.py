@@ -74,8 +74,13 @@ class Boleto:
         self.boleto.data_vencimento = order_line.date_maturity
         self.boleto.data_documento = order_line.emission_date
         self.boleto.data_processamento = date.today()
+<<<<<<< HEAD
         self.boleto.valor = "%.2f" % order_line.amount_total
         self.boleto.valor_documento = "%.2f" % order_line.amount_total
+=======
+        self.boleto.valor = str("%.2f" % (move_line.amount_residual))
+        self.boleto.valor_documento = str("%.2f" % (move_line.amount_residual))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         self.boleto.especie = \
             order_line.currency_id and order_line.currency_id.symbol or 'R$'
         self.boleto.quantidade = '1'

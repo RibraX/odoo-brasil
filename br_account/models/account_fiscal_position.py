@@ -236,17 +236,29 @@ class AccountFiscalPosition(models.Model):
 
             # Verifica a categoria fiscal. Se contido, adiciona 1 ponto
             # Se não, retorna valor -1 (a regra será descartada)
+<<<<<<< HEAD
             if product.fiscal_category_id in rule.fiscal_category_ids:
                 rule_points += 1
             elif len(rule.fiscal_category_ids) > 0:
+=======
+            if product.categ_id in rule.product_category_ids:
+                rule_points += 1
+            elif len(rule.product_category_ids) > 0:
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                 return -1
 
             # Verifica produtos. Se contido, adiciona 1 ponto
             # Se não, retorna -1
+<<<<<<< HEAD
             if product.fiscal_classification_id in\
                     rule.product_fiscal_classification_ids:
                 rule_points += 1
             elif len(rule.product_fiscal_classification_ids) > 0:
+=======
+            if product in rule.product_ids:
+                rule_points += 1
+            elif len(rule.product_ids) > 0:
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                 return -1
 
             # Verifica o estado. Se contido, adiciona 1 ponto
@@ -256,6 +268,15 @@ class AccountFiscalPosition(models.Model):
             elif len(rule.state_ids) > 0:
                 return -1
 
+<<<<<<< HEAD
+=======
+            # Verifica o cliente. Se está contido, adiciona 1 ponto
+            # Se não, retorna -1
+            if partner in rule.partner_ids:
+                rule_points += 1
+            elif len(rule.partner_ids) > 0:
+                return -1
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         else:
             return -1
 

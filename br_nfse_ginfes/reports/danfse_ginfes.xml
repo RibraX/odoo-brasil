@@ -6,8 +6,13 @@
         string="Nota de Serviço - Ginfes"
         model="invoice.eletronic"
         report_type="qweb-pdf"
+<<<<<<< HEAD:br_nfse_ginfes/reports/danfse_ginfes.xml
         file="br_nfse_ginfes.main_template_br_nfse_danfe_ginfes"
         name="br_nfse_ginfes.main_template_br_nfse_danfe_ginfes" />
+=======
+        file="br_nfse.main_template_br_nfse_danfe_ginfes"
+        name="br_nfse.main_template_br_nfse_danfe_ginfes" />
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2:br_nfse/reports/danfse_ginfes.xml
 
       <record id="paperformat_br_nfse_danfse" model="report.paperformat">
           <field name="name">Danfe Ginfes</field>
@@ -24,7 +29,11 @@
     <record id="report_br_nfse_danfe_ginfes" model="ir.actions.report">
         <field name="paperformat_id" ref="paperformat_br_nfse_danfse"/>
         <field name="name">Nota de Serviço - Ginfes</field>
+<<<<<<< HEAD:br_nfse_ginfes/reports/danfse_ginfes.xml
         <field name="print_report_name">'%s - NF - %s' % (object.numero, object.partner_id.name)</field>
+=======
+        <field name="print_report_name">'%s - NF - %s.pdf' % (object.numero, object.partner_id.name)</field>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2:br_nfse/reports/danfse_ginfes.xml
     </record>
 
     <template id="danfse_report_template_ginfes">
@@ -76,7 +85,11 @@
                 <div class="col-2 rotulo br">
                     Competência
                 </div>
+<<<<<<< HEAD:br_nfse_ginfes/reports/danfse_ginfes.xml
                 <div class="col-2 linha br">
+=======
+                <div class="col-xs-2 linha br">
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2:br_nfse/reports/danfse_ginfes.xml
                     <span t-field="doc.data_emissao" t-options='{"format": "MM/yyyy"}' />
                 </div>
                 <div class="col-2 rotulo br">
@@ -479,12 +492,19 @@
     </template>
 
     <template id="main_template_br_nfse_danfe_ginfes">
+<<<<<<< HEAD:br_nfse_ginfes/reports/danfse_ginfes.xml
         <t t-call="web.html_container">
             <div class="article">
                 <t t-foreach="docs" t-as="doc">
                     <t t-call="br_nfse_ginfes.danfse_report_template_ginfes" t-lang="doc.partner_id.lang"/>
                 </t>
             </div>
+=======
+        <t t-call="report.html_container">">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="br_nfse.danfse_report_template_ginfes" t-lang="doc.partner_id.lang"/>
+            </t>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2:br_nfse/reports/danfse_ginfes.xml
         </t>
     </template>
 

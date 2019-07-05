@@ -11,7 +11,11 @@ import base64
 import logging
 
 from odoo import models, fields, api, _
+<<<<<<< HEAD
 from ..tools import fiscal
+=======
+from odoo.addons.br_base.tools import fiscal
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -82,6 +86,7 @@ class ResPartner(models.Model):
     @api.multi
     @api.constrains('cnpj_cpf', 'country_id', 'is_company')
     def _check_cnpj_cpf(self):
+<<<<<<< HEAD
         for item in self:
             country_code = item.country_id.code or ''
             if item.cnpj_cpf and country_code.upper() == 'BR':
@@ -90,6 +95,15 @@ class ResPartner(models.Model):
                         raise ValidationError(_(u'Invalid CNPJ Number!'))
                 elif not fiscal.validate_cpf(item.cnpj_cpf):
                     raise ValidationError(_(u'Invalid CPF Number!'))
+=======
+        country_code = self.country_id.code or ''
+        if self.cnpj_cpf and country_code.upper() == 'BR':
+            if self.is_company:
+                if not fiscal.validate_cnpj(self.cnpj_cpf):
+                    raise ValidationError(_(u'CNPJ inválido!'))
+            elif not fiscal.validate_cpf(self.cnpj_cpf):
+                raise ValidationError(_(u'CPF inválido!'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return True
 
     def _validate_ie_param(self, uf, inscr_est):
@@ -111,6 +125,7 @@ class ResPartner(models.Model):
         """Checks if company register number in field insc_est is valid,
         this method call others methods because this validation is State wise
         :Return: True or False."""
+<<<<<<< HEAD
         for partner in self:
             if not partner.inscr_est or partner.inscr_est == 'ISENTO' \
                     or not partner.is_company:
@@ -119,6 +134,15 @@ class ResPartner(models.Model):
             res = partner._validate_ie_param(uf, partner.inscr_est)
             if not res:
                 raise ValidationError(_(u'Invalid State Inscription!'))
+=======
+        if not self.inscr_est or self.inscr_est == 'ISENTO' \
+                or not self.is_company:
+            return True
+        uf = self.state_id and self.state_id.code.lower() or ''
+        res = self._validate_ie_param(uf, self.inscr_est)
+        if not res:
+            raise ValidationError(_(u'Inscrição Estadual inválida!'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return True
 
     @api.one
@@ -132,9 +156,14 @@ class ResPartner(models.Model):
             ['&', ('inscr_est', '=', self.inscr_est), ('id', '!=', self.id)])
 
         if len(partner_ids) > 0:
+<<<<<<< HEAD
             raise ValidationError(
                 _('This State Inscription/RG number \
                   is already being used by another partner!'))
+=======
+            raise ValidationError(_(u'Já existe um parceiro cadastrado com'
+                                    u'esta Inscrição Estadual/RG!'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return True
 
     @api.onchange('cnpj_cpf')
@@ -151,7 +180,11 @@ class ResPartner(models.Model):
                     % (val[0:3], val[3:6], val[6:9], val[9:11])
                 self.cnpj_cpf = cnpj_cpf
             else:
+<<<<<<< HEAD
                 raise UserError(_(u'Verify CNPJ/CPF number'))
+=======
+                raise ValidationError(_(u'Verifique o CNPJ/CPF'))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.onchange('city_id')
     def _onchange_city_id(self):
@@ -182,11 +215,18 @@ class ResPartner(models.Model):
     @api.one
     def action_check_sefaz(self):
         if self.cnpj_cpf and self.state_id:
+<<<<<<< HEAD
             if self.state_id.code == 'AL':
                 raise UserError(_(u'Alagoas doesn\'t have this service'))
             if self.state_id.code == 'RJ':
                 raise UserError(_(
                     u'Rio de Janeiro doesn\'t have this service'))
+=======
+            NAO_CONSULTA_CADASTRO = ['AL', 'RJ', 'PA', 'MA']
+            if self.state_id.code in NAO_CONSULTA_CADASTRO:
+                raise UserError(u'{} não possui consulta de cadastro'.format(
+                    self.state_id.name))
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             company = self.env.user.company_id
             if not company.nfe_a1_file and not company.nfe_a1_password:
                 raise UserError(_(
@@ -199,13 +239,21 @@ class ResPartner(models.Model):
             resposta = consulta_cadastro(certificado, obj=obj, ambiente=1,
                                          estado=self.state_id.ibge_code)
 
+<<<<<<< HEAD
             info = resposta['object'].getchildren()[0]
             info = info.infCons
+=======
+            info = resposta['object'].getchildren()[0].infCons
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             if info.cStat == 111 or info.cStat == 112:
                 if not self.inscr_est:
                     self.inscr_est = info.infCad.IE.text
                 if not self.cnpj_cpf:
+<<<<<<< HEAD
                     self.cnpj_cpf = info.infCad.CNPJ.text
+=======
+                    self.cnpj_cpf = info.infCad.IE.text
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
                 def get_value(obj, prop):
                     if prop not in dir(obj):

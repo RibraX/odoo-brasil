@@ -139,12 +139,45 @@ class PurchaseOrderLine(models.Model):
         digits=dp.get_precision('Discount'),
         default=0.0)
 
+<<<<<<< HEAD
+=======
+    discount = fields.Float(
+        string='Discount (%)',
+        digits=dp.get_precision('Discount'),
+        default=0.0)
+
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     valor_desconto = fields.Float(
         compute='_compute_amount', string=u'Vlr. Desc. (-)', store=True,
         digits=dp.get_precision('Sale Price'))
     valor_bruto = fields.Float(
         compute='_compute_amount', string='Vlr. Bruto', store=True,
         digits=dp.get_precision('Sale Price'))
+
+    icms_rule_id = fields.Many2one(
+        'account.fiscal.position.tax.rule',
+        u'Regra ICMS',
+        store=True)
+    ipi_rule_id = fields.Many2one(
+        'account.fiscal.position.tax.rule',
+        u'Regra IPI',
+        store=True)
+    pis_rule_id = fields.Many2one(
+        'account.fiscal.position.tax.rule',
+        u'Regra PIS',
+        store=True)
+    cofins_rule_id = fields.Many2one(
+        'account.fiscal.position.tax.rule',
+        u'Regra COFINS',
+        store=True)
+    issqn_rule_id = fields.Many2one(
+        'account.fiscal.position.tax.rule',
+        u'Regra ISSQN',
+        store=True)
+    ii_rule_id = fields.Many2one(
+        'account.fiscal.position.tax.rule',
+        u'Regra II',
+        store=True)
 
     def _update_tax_from_ncm(self):
         if self.product_id:

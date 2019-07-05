@@ -21,6 +21,14 @@ class AccountInvoice(models.Model):
                 item.nfe_status = '%s - %s' % (
                     docs[0].codigo_retorno, docs[0].mensagem_retorno)
 
+    @api.multi
+    @api.depends("document_serie_id")
+    def _compute_nfe_next_number(self):
+        for item in self:
+            if item.state == 'draft':
+                seq_id = item.sudo().document_serie_id.internal_sequence_id
+                self.nfe_next_number = seq_id.number_next_actual
+
     ambiente_nfe = fields.Selection(
         string="Ambiente NFe", related="company_id.tipo_ambiente",
         readonly=True)
@@ -34,8 +42,16 @@ class AccountInvoice(models.Model):
         string=u"Número NFe", compute="_compute_nfe_number")
     nfe_exception_number = fields.Integer(
         string=u"Número NFe", compute="_compute_nfe_number")
+<<<<<<< HEAD
     import_declaration_ids = fields.One2many(
         'br_account.import.declaration', 'invoice_id')
+=======
+    nfe_next_number = fields.Integer(
+        string=u"* Número NF-e", readonly=True,
+        compute="_compute_nfe_next_number",
+        help="Númeração da NF-e a ser gerada, " +
+        "caso outra fatura não seja validada.")
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.multi
     def action_invoice_draft(self):
@@ -49,16 +65,45 @@ class AccountInvoice(models.Model):
                           Duplique a fatura para continuar'))
         return super(AccountInvoice, self).action_invoice_draft()
 
+<<<<<<< HEAD
     def invoice_print(self):
         doc = self.env['invoice.eletronic'].search(
             [('invoice_id', '=', self.id)], limit=1)
         if doc.model in ('55', '65'):
             return self.env.ref(
                 'br_nfe.report_br_nfe_danfe').report_action(doc)
+=======
+    @api.multi
+    def action_number(self):
+        super(AccountInvoice, self).action_number()
+        if self.fiscal_document_id.code == '55':
+            if not self.document_serie_id:
+                return
+            serie_id = self.document_serie_id
+            seq_id = serie_id.sudo().internal_sequence_id
+            number_next_actual = seq_id.number_next_actual
+            inv_inutilized = self.env['invoice.eletronic.inutilized'].search([
+                ('serie', '=', serie_id.id),
+                ('numeration_start', '<', number_next_actual),
+                ('numeration_end', '>', number_next_actual)])
+
+            if len(inv_inutilized) > 0:
+                raise UserError(u"Número gerado para NF-e inutilizado.")
+
+        return True
+
+    def invoice_print(self):
+        if self.fiscal_document_id.code == '55':
+            docs = self.env['invoice.eletronic'].search(
+                [('invoice_id', '=', self.id)])
+            return self.env['report'].get_action(
+                docs.ids, 'nfe.custom_report_danfe')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         else:
             return super(AccountInvoice, self).invoice_print()
 
     def _return_pdf_invoice(self, doc):
+<<<<<<< HEAD
         if doc.model in ('55', '65'):
             return 'br_nfe.report_br_nfe_danfe'
         return super(AccountInvoice, self)._return_pdf_invoice(doc)
@@ -97,6 +142,15 @@ class AccountInvoice(models.Model):
         else:
             numero_nfe = res['numero']
 
+=======
+        if self.fiscal_document_id.code == '55':
+            return 'nfe.custom_report_danfe'
+        return super(AccountInvoice, self)._return_pdf_invoice(doc)
+
+    def _prepare_edoc_vals(self, inv):
+        res = super(AccountInvoice, self)._prepare_edoc_vals(inv)
+
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         res['payment_mode_id'] = inv.payment_mode_id.id
         res['ind_pres'] = inv.fiscal_position_id.ind_pres
         res['finalidade_emissao'] = inv.fiscal_position_id.finalidade_emissao
@@ -203,6 +257,8 @@ class AccountInvoice(models.Model):
         vals['icms_bc_uf_dest'] = invoice_line.icms_bc_uf_dest
         vals['icms_aliquota_interestadual'] = \
             invoice_line.tax_icms_inter_id.amount or 0.0
+        vals['icms_aliquota_inter_part'] = \
+            invoice_line.icms_aliquota_inter_part or 0.0
         vals['icms_aliquota_uf_dest'] = \
             invoice_line.tax_icms_intra_id.amount or 0.0
         vals['icms_aliquota_fcp_uf_dest'] = \
@@ -224,7 +280,6 @@ class AccountInvoice(models.Model):
                     'amount_discount': di_line.amount_discount,
                     'drawback_number': di_line.drawback_number,
                 }))
-
             di_importacao.append((0, None, {
                 'name': di.name,
                 'date_registration': di.date_registration,

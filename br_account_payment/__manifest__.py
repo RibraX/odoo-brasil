@@ -27,11 +27,15 @@
         'views/account_payment.xml',
         'views/account_journal.xml',
         'views/account_move.xml',
+<<<<<<< HEAD
         'views/payment_order.xml',
         'views/res_settings.xml',
         'views/payment_statement.xml',
         'security/account_security.xml',
         'wizard/payment_cnab_import.xml',
+=======
+        'security/account_security.xml',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
     ],
     'installable': True,
     'application': True,

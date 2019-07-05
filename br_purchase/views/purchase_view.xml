@@ -25,7 +25,16 @@
                 <field name="ipi_reducao_bc" invisible="1" />
                 <field name="pis_cst" invisible="1" />
                 <field name="cofins_cst" invisible="1" />
+<<<<<<< HEAD
                 <field name="l10n_br_issqn_deduction" invisible="1" />
+=======
+                <field name="ii_rule_id" invisible="1" />
+                <field name="issqn_rule_id" invisible="1"/>
+                <field name="cofins_rule_id" invisible="1" />
+                <field name="pis_rule_id" invisible="1" />
+                <field name="ipi_rule_id" invisible="1" />
+                <field name="icms_rule_id" invisible="1" />
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             </xpath>
             <xpath expr="//field[@name='order_line']/form/sheet/group/group/field[@name='price_unit']" position="after">
                 <field name="fiscal_position_type" invisible="1" />
@@ -44,14 +53,27 @@
                 <field name="ipi_reducao_bc" invisible="1" />
                 <field name="pis_cst" invisible="1" />
                 <field name="cofins_cst" invisible="1" />
+<<<<<<< HEAD
                 <field name="l10n_br_issqn_deduction" invisible="1" />
+=======
+                <field name="ii_rule_id" invisible="1"/>
+                <field name="issqn_rule_id" invisible="1"/>
+                <field name="cofins_rule_id" invisible="1" />
+                <field name="pis_rule_id" invisible="1"/>
+                <field name="ipi_rule_id" invisible="1"/>
+                <field name="icms_rule_id" invisible="1"/>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="attributes">
                 <attribute name="invisible">0</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/tree/field[@name='taxes_id']" position="before">
+<<<<<<< HEAD
                 <field name="discount"
                 groups="sale.group_discount_per_so_line"/>
+=======
+                <field name="discount" groups="sale.group_discount_per_so_line"/>
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
                 <field name="valor_desconto" invisible="1" />
             </xpath>
             <field name="amount_untaxed" position="attributes">

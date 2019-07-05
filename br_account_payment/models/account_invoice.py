@@ -11,8 +11,12 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     payment_mode_id = fields.Many2one(
+<<<<<<< HEAD
         'l10n_br.payment.mode', readonly=True,
         states=FIELD_STATE, string=u"Modo de pagamento")
+=======
+        'payment.mode', string=u"Modo de pagamento")
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @api.multi
     def finalize_invoice_move_lines(self, move_lines):

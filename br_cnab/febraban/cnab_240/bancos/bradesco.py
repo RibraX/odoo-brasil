@@ -26,7 +26,12 @@ class Bradesco240(Cnab240):
         cod_convenio = self.order.src_bank_account_id.codigo_convenio
 
         vals['servico_servico'] = 1
+<<<<<<< HEAD
         vals['cedente_convenio'] = '{:>020s}'.format(cod_convenio)
+=======
+        vals['cedente_convenio'] = self.order.payment_mode_id.bank_account_id.\
+            codigo_convenio
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         vals['controlecob_numero'] = self.order.id
         vals['controlecob_data_gravacao'] = self.data_hoje()
         vals['nome_do_banco'] = 'BANCO BRADESCO S.A'
@@ -37,15 +42,29 @@ class Bradesco240(Cnab240):
         if vals['prazo_protesto'] < 3:
             vals['prazo_protesto'] = 3
         vals['codigo_moeda'] = 9
+<<<<<<< HEAD
         vals['prazo_baixa'] = str(vals['prazo_baixa'])
+=======
+        vals['prazo_baixa'] = unicode(str(
+            vals['prazo_baixa']), "utf-8")
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         vals['desconto1_percentual'] = Decimal('0.00')
         vals['valor_iof'] = Decimal('0.00')
         # vals['cobrancasimples_valor_titulos'] = Decimal('02.00')
         vals['identificacao_titulo_banco'] = self.get_identificacao_titulo(
             line)
+<<<<<<< HEAD
         vals['cedente_conta_dv'] = str(vals['cedente_conta_dv'])
         vals['cedente_agencia_dv'] = str(vals['cedente_agencia_dv'])
         vals['cedente_dv_ag_cc'] = str(vals['cedente_dv_ag_cc'])
+=======
+        vals['cedente_conta_dv'] = unicode(str(
+            vals['cedente_conta_dv']), "utf-8")
+        vals['cedente_agencia_dv'] = unicode(str(
+            vals['cedente_agencia_dv']), "utf-8")
+        vals['cedente_dv_ag_cc'] = unicode(str(
+            vals['cedente_dv_ag_cc']), "utf-8")
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         vals['cobranca_carteira'] = 1
         vals['cobranca_cadastramento'] = 1
         vals['cobranca_documentoTipo'] = 1
@@ -83,7 +102,11 @@ class Bradesco240(Cnab240):
         return dv
 
     def modulo11(self, num, base=9, r=0):
+<<<<<<< HEAD
         if not isinstance(num, str):
+=======
+        if not isinstance(num, basestring):
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             raise TypeError
         soma = 0
         fator = 2
@@ -101,6 +124,10 @@ class Bradesco240(Cnab240):
         if r == 1:
             resto = soma % 11
             return resto
+<<<<<<< HEAD
+=======
+
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     def _hook_validation(self):
         if not self.order.src_bank_account_id.codigo_convenio:

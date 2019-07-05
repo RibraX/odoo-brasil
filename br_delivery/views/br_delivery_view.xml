@@ -9,7 +9,7 @@
             <form string="Veículo">
                 <sheet>
                     <group col="4">
-                        <separator colspan="4" string="Transportadora" />
+                        <separator colspan="4" string="Método de Entrega" />
                         <field name="carrier_id" colspan="2"/>
                     </group>
                     <group col="8">

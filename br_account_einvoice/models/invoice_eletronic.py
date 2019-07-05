@@ -122,7 +122,11 @@ class InvoiceEletronic(models.Model):
     partner_shipping_id = fields.Many2one(
         'res.partner', string=u'Entrega', readonly=True, states=STATE)
     payment_term_id = fields.Many2one(
+<<<<<<< HEAD
         'account.payment.term', string='Condição pagamento',
+=======
+        'account.payment.term', string=u'Condição pagamento',
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         readonly=True, states=STATE)
     fiscal_position_id = fields.Many2one(
         'account.fiscal.position', string=u'Posição Fiscal',
@@ -476,6 +480,7 @@ class InvoiceEletronic(models.Model):
     def log_exception(self, exc):
         self.codigo_retorno = -1
         self.mensagem_retorno = str(exc)
+<<<<<<< HEAD
 
     def notify_user(self):
         redirect = {
@@ -501,6 +506,8 @@ class InvoiceEletronic(models.Model):
             'res_model_id': self.env.ref(
                 'br_account_einvoice.model_invoice_eletronic').id,
         })
+=======
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     def _get_state_to_send(self):
         return ('draft',)
@@ -552,7 +559,11 @@ class InvoiceEletronic(models.Model):
 
     @api.multi
     def copy(self, default=None):
+<<<<<<< HEAD
         raise UserError(_('Não é possível duplicar uma Nota Fiscal.'))
+=======
+        raise UserError('Não é possível duplicar uma Nota Fiscal.')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
 
 class InvoiceEletronicEvent(models.Model):
@@ -596,7 +607,11 @@ class InvoiceEletronicItem(models.Model):
     quantidade = fields.Float(
         string=u'Quantidade', readonly=True, states=STATE,
         digits=dp.get_precision('Product Unit of Measure'))
+<<<<<<< HEAD
     preco_unitario = fields.Monetary(
+=======
+    preco_unitario = fields.Float(
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         string=u'Preço Unitário', digits=dp.get_precision('Product Price'),
         readonly=True, states=STATE)
 

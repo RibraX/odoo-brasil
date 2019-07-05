@@ -74,10 +74,18 @@ class Cnab240(Cnab):
             'cedente_agencia': int(self.order.src_bank_account_id.bra_number),
             'cedente_conta': int(self.order.src_bank_account_id.acc_number),
             'cedente_conta_dv': cedente_conta_dv,
+<<<<<<< HEAD
             'cedente_convenio': self.order.src_bank_account_id.codigo_convenio,
             'cedente_agencia_dv':
             self.order.src_bank_account_id.bra_number_dig,
             'cedente_nome': self.order.company_id.legal_name,
+=======
+            'cedente_convenio': self.order.payment_mode_id.bank_account_id.
+            codigo_convenio,
+            'cedente_agencia_dv': self.order.payment_mode_id.
+            bank_account_id.bra_number_dig,
+            'cedente_nome': self.order.payment_mode_id.company_id.legal_name,
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
             # DV ag e conta
             'cedente_dv_ag_cc': self.order.src_bank_account_id.bra_number_dig,
             'arquivo_codigo': 1,  # Remessa/Retorno

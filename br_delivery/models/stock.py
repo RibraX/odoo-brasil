@@ -21,12 +21,19 @@ class StockPicking(models.Model):
     vehicle_state_id = fields.Many2one('res.country.state', 'UF da Placa')
     vehicle_rntc = fields.Char('RNTC', size=20)
     freight_responsibility = fields.Selection(
+<<<<<<< HEAD
         [('0', '0 - Contratação do Frete por conta do Remetente (CIF)'),
          ('1', '1 - Contratação do Frete por conta do Destinatário (FOB)'),
          ('2', '2 - Contratação do Frete por conta de Terceiros'),
          ('3', '3 - Transporte Próprio por conta do Remetente'),
          ('4', '4 - Transporte Próprio por conta do Destinatário'),
          ('9', '9 - Sem Ocorrência de Transporte')],
+=======
+        [('0', u'0 - Emitente'),
+         ('1', u'1 - Destinatário'),
+         ('2', u'2 - Terceiros'),
+         ('9', u'9 - Sem Frete')],
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         u'Modalidade do frete')
 
     @api.onchange('vehicle_id')
@@ -52,14 +59,24 @@ class StockMove(models.Model):
 
     def _get_new_picking_values(self):
         vals = super(StockMove, self)._get_new_picking_values()
+<<<<<<< HEAD
         vals['incoterm'] = self.sale_line_id.order_id.incoterm.id
         vals['carrier_id'] = self.sale_line_id.order_id.carrier_id.id
         vals['freight_responsibility'] =\
             self.sale_line_id.order_id.incoterm.freight_responsibility
+=======
+        vals['incoterm'] = self.procurement_id.sale_line_id.order_id.incoterm.\
+            id
+        vals['carrier_id'] = self.procurement_id.sale_line_id.order_id.\
+            carrier_id.id
+        vals['freight_responsibility'] = self.procurement_id.sale_line_id.\
+            order_id.incoterm.freight_responsibility
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return vals
 
 
 class Incoterms(models.Model):
+<<<<<<< HEAD
     _inherit = "account.incoterms"
 
     freight_responsibility = fields.Selection(
@@ -69,4 +86,13 @@ class Incoterms(models.Model):
          ('3', '3 - Transporte Próprio por conta do Remetente'),
          ('4', '4 - Transporte Próprio por conta do Destinatário'),
          ('9', '9 - Sem Ocorrência de Transporte')],
+=======
+    _inherit = "stock.incoterms"
+
+    freight_responsibility = fields.Selection(
+        [('0', u'0 - Emitente'),
+         ('1', u'1 - Destinatário'),
+         ('2', u'2 - Terceiros'),
+         ('9', u'9 - Sem Frete')],
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         'Modalidade do frete', default="9")

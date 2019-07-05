@@ -40,10 +40,7 @@ class HrPayslip(models.Model):
     def get_worked_day_lines(self, contract_ids, date_from, date_to):
         res = super(HrPayslip, self).get_worked_day_lines(
             contract_ids, date_from, date_to)
-        employee = self.employee_id
-        contract = self.env['hr.contract'].browse(
-            self.get_contract(employee, date_from, date_to))
-        if contract:
+        for contract in contract_ids:
             leaves = self.env['hr.holidays'].search(
                 [('employee_id', '=', self.employee_id.id),
                  ('date_from', '>=', date_from),
@@ -52,7 +49,6 @@ class HrPayslip(models.Model):
                  ('type', '=', 'remove')])
             dsr = {}
             for leave in leaves:
-                # BUG: Fazer validação da falta
                 if leave.holiday_status_id.name == 'Unpaid':
                     leave_start = fields.Datetime.from_string(leave.date_from)
                     dsr[self.week_of_month(leave_start)] = leave_start
@@ -61,8 +57,8 @@ class HrPayslip(models.Model):
                 'sequence': 8,
                 'code': 'DSR',
                 'number_of_days': len(dsr),
-                'contract_id': contract.id,
+                'contract_id': contract,
             }
             if dsr_dict['number_of_days'] != 0:
                 res += [dsr_dict]
-            return res
+        return res

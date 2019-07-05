@@ -40,8 +40,13 @@ class Itau240(Cnab240):
         vals['cedente_agencia_dv'] = int(vals['cedente_agencia_dv'])
         vals['cedente_dv_ag_cc'] = int(vals['cedente_dv_ag_cc'])
         vals['codigo_multa'] = int(vals['codigo_multa'])
+<<<<<<< HEAD
         vals['data_multa'] = str(vals['data_multa']).zfill(8)
         vals['juros_multa'] = vals['juros_multa']
+=======
+        vals['data_multa'] = unicode(vals['data_multa']).zfill(8)
+        vals['juros_multa'] = unicode(vals['juros_multa'])
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         return vals
 
     def dv_nosso_numero(self, agencia, conta, carteira, nosso_numero):

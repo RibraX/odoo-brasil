@@ -339,6 +339,12 @@
                 </div>
                 <div style="float:left; width:50%;">
                     (2) Esta NFS-e substitui o RPS Nº <span t-field="doc.numero" /> Série API, emitido em <span t-field="doc.data_emissao" t-options='{"format": "dd/MM/yyyy"}' />
+<<<<<<< HEAD:br_nfse_imperial/reports/danfse_imperial.xml
+=======
+                </div>
+                <div style="float:left; width:50%;">
+                    (3) Data de vencimento do ISS desta NFS-e: <span t-esc="doc.issqn_due_date()" />
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2:br_nfse/reports/danfse_imperial.xml
                 </div>
                 <br />
                 <span t-field="doc.informacoes_legais"></span>

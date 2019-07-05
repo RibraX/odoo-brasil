@@ -149,8 +149,12 @@ class TestInutilizacao(TransactionCase):
 
     @patch('odoo.addons.br_nfe.models.invoice_eletronic.valida_nfe')
     @patch('odoo.addons.br_nfe.models.inutilized_nfe.inutilizar_nfe')
+<<<<<<< HEAD
     def test_inutilizacao_falha_schema(self, inutilizar, validar):
         validar.return_value = ''
+=======
+    def test_inutilizacao_falha_schema(self, inutilizar):
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         with open(os.path.join(self.caminho,
                                'xml/inutilizacao_sent_xml.xml')) as f:
             sent_xml = f.read()
@@ -169,9 +173,14 @@ class TestInutilizacao(TransactionCase):
             modelo='55',
             justificativa=justif
         ))
+<<<<<<< HEAD
         wizard.action_inutilize_nfe()
         inutilized = self.env['invoice.eletronic.inutilized'].search([])
         self.assertEqual(inutilized.state, 'error')
+=======
+        with self.assertRaises(UserError):
+            wizard.action_inutilize_nfe()
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
     @patch('odoo.addons.br_nfe.models.invoice_eletronic.valida_nfe')
     @patch('odoo.addons.br_nfe.models.inutilized_nfe.inutilizar_nfe')

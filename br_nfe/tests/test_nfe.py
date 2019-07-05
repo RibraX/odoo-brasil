@@ -340,6 +340,7 @@ class TestNFeBrasil(TransactionCase):
             invoice.action_invoice_open()
 
             danfe = invoice.invoice_print()
+<<<<<<< HEAD
             self.assertEquals(danfe['report_name'],
                               'br_nfe.main_template_br_nfe_danfe')
 
@@ -361,6 +362,11 @@ class TestNFeBrasil(TransactionCase):
                 }],
                 'modelo': '55',
             }
+=======
+            self.assertEquals(
+                danfe['report_name'], 'nfe.custom_report_danfe')
+            self.assertEquals(danfe['report_type'], u'pdf')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
         prepare.side_effect = _prepare_lote
         for invoice in self.invoices:
@@ -428,8 +434,14 @@ class TestNFeBrasil(TransactionCase):
             self.assertEquals(invoice_eletronic.state, 'error')
             self.assertEquals(invoice_eletronic.codigo_retorno, '694')
 
+<<<<<<< HEAD
     @patch('odoo.addons.br_nfe.models.invoice_eletronic.recepcao_evento_cancelamento')  # noqa
     def test_nfe_cancelamento_ok(self, cancelar):
+=======
+    @patch('odoo.addons.br_nfe.models.invoice_eletronic.consultar_protocolo_nfe') # noqa
+    @patch('odoo.addons.br_nfe.models.invoice_eletronic.recepcao_evento_cancelamento') # noqa
+    def test_nfe_cancelamento_ok(self, cancelar, consulta):
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
         for invoice in self.invoices:
             # Confirmando a fatura deve gerar um documento eletrônico
             invoice.action_invoice_open()
@@ -444,13 +456,28 @@ class TestNFeBrasil(TransactionCase):
                 'received_xml': xml_recebido
             }
 
+            # Consulta realizada
+            xml_recebido = open(os.path.join(
+                self.caminho, 'xml/consulta.xml'), 'r').read()
+            resp_consulta = sanitize_response(xml_recebido)
+
+            consulta.return_value = {
+                'object': resp_consulta[1],
+                'sent_xml': '<xml />',
+                'received_xml': xml_recebido
+            }
+
             invoice_eletronic = self.env['invoice.eletronic'].search(
                 [('invoice_id', '=', invoice.id)])
 
+<<<<<<< HEAD
             # As 2 linhas seguintes servem apenas para setar o nfe_processada
             # do invoice_eletronic -> famosa gambiarra
             encoded_xml = '<xml />'.encode('utf-8')
             invoice_eletronic.nfe_processada = base64.encodestring(encoded_xml)
+=======
+            invoice_eletronic.nfe_processada = base64.encodestring('<xml/>')
+>>>>>>> f1111b8ab4e9b0f064d267d2c8ccaab9409617c2
 
             invoice_eletronic.action_cancel_document(
                 justificativa="Cancelamento de teste")

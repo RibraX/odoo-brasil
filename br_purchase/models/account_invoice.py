@@ -71,6 +71,7 @@ class AccountInvoice(models.Model):
         res['tributos_estimados'] = valor
 
         res['incluir_ipi_base'] = line.incluir_ipi_base
+        res['icms_rule_id'] = line.icms_rule_id.id
         res['icms_tipo_base'] = '3'
         res['icms_aliquota'] = icms.amount or 0.0
         res['icms_st_tipo_base'] = '4'
@@ -85,23 +86,28 @@ class AccountInvoice(models.Model):
         res['icms_uf_dest'] = icms_intra.amount or 0.0
         res['icms_fcp_uf_dest'] = icms_fcp.amount or 0.0
 
+        res['ipi_rule_id'] = line.ipi_rule_id.id
         res['ipi_cst'] = line.ipi_cst
         res['ipi_aliquota'] = ipi.amount or 0.0
         res['ipi_reducao_bc'] = line.ipi_reducao_bc
         res['ipi_tipo'] = 'percent'
 
+        res['pis_rule_id'] = line.pis_rule_id.id
         res['pis_cst'] = line.pis_cst
         res['pis_aliquota'] = pis.amount or 0.0
         res['pis_tipo'] = 'percent'
 
+        res['cofins_rule_id'] = line.cofins_rule_id.id
         res['cofins_cst'] = line.cofins_cst
         res['cofins_aliquota'] = cofins.amount or 0.0
         res['cofins_tipo'] = 'percent'
 
+        res['issqn_rule_id'] = line.issqn_rule_id.id
         res['issqn_aliquota'] = issqn.amount or 0.0
         res['issqn_tipo'] = 'N'
         res['l10n_br_issqn_deduction'] = line.l10n_br_issqn_deduction
 
+        res['ii_rule_id'] = line.ii_rule_id.id
         res['ii_aliquota'] = ii.amount or 0.0
 
         res['csll_aliquota'] = csll.amount or 0.0
